@@ -1,0 +1,68 @@
+import java.time.LocalDate;
+
+public class Order {
+    public int orderID;
+    public LocalDate orderDate;
+    public OrderDetail[] lineItems;
+    public int count;
+    public static final int MAX_SIZE = 20;
+
+    public Order(int orderID, LocalDate orderDate) {
+        this.orderID = orderID;
+        this.orderDate = orderDate;
+        this.lineItems = new OrderDetail[MAX_SIZE];
+        this.count = 0;
+    }
+
+    public int getOrderID() {
+        return orderID;
+    }
+
+    public void setOrderID(int orderID) {
+        this.orderID = orderID;
+    }
+
+    public LocalDate getOrderDate() {
+        return orderDate;
+    }
+
+    public void setOrderDate(LocalDate orderDate) {
+        this.orderDate = orderDate;
+    }
+
+    public void addLineItem(Product product, int quantity) {
+        if (count < MAX_SIZE) {
+            lineItems[count++] = new OrderDetail(quantity, product);
+        } else {
+            System.out.println("Khong the them linh kien.");
+        }
+    }
+
+    public double calcTotalCharge() {
+        double totalCharge = 0;
+        for (int i = 0; i < count; i++) {
+            totalCharge += lineItems[i].calcTotalPrice();
+        }
+        return totalCharge;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Ma HD: ").append(orderID).append("\n");
+        sb.append("Ngay lap hoa don: ").append(orderDate).append("\n");
+        sb.append(String.format("%-4s| %-7s | %-10s | %7s | %-8s | %-10s%n", "STT", "Ma SP", "Mo Ta", "So luong", "Don Gia", "Thanh Tien"));
+        sb.append("--------------------------------------------------------\n");
+        double totalCharge = 0.0;
+        for (int i = 0; i < count; i++) {
+            OrderDetail item = lineItems[i];
+            double totalPrice = item.calcTotalPrice();
+            sb.append(String.format("%-4d| %-7s | %-10s | %7d | %8.2f | %10.2f%n", i + 1, item.getProduct().getProductID(),
+                    item.getProduct().getDescription(), item.getQuatity(), item.getProduct().getPrice(), totalPrice));
+            totalCharge += totalPrice;
+        }
+        sb.append("--------------------------------------------------------\n");
+        sb.append(String.format("%48s: %10.2f", "Tong Cong", totalCharge));
+        return sb.toString();
+    }
+}
