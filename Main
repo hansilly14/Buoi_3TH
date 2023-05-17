@@ -1,0 +1,64 @@
+import java.util.Scanner;
+import java.sql.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        dsSinhVien dsSV= new dsSinhVien();
+        int choice = 0;
+        do {
+            System.out.println("MENU:");
+            System.out.println("1. Nhap thong tin");
+            System.out.println("2. Xuat thong tin");
+            System.out.println("3. Xoa");
+            System.out.println("4. Chinh sua");
+            System.out.println("5. Tim kiem theo ma");
+            System.out.println("6. Tim kiem theo ten");
+            System.out.println("7. Sap xep tang dan theo ma");
+            System.out.println("8. Thoat");
+            System.out.print("Nhap lua chon cua ban: ");
+            choice = sc.nextInt();
+            sc.nextLine(); // Bỏ qua kí tự newline
+            switch (choice) {
+            case 1:
+            	dsSV.Nhap();           	
+            	break;
+            case 2:
+            	dsSV.xuatthongtin();;
+            	break;
+            case 3:
+            	 sc.nextLine();
+                 System.out.print("Nhap ma sinh vien can xoa: "); String masv = sc.nextLine();
+            	dsSV.XoaSinhVienTheoMa(masv);;
+            	break;
+            case 4:
+            	 sc.nextLine();
+                 System.out.println("Nhap ma sinh vien can sua: "); String maSv = sc.nextLine();
+            	dsSV.SuaThongTinSV(maSv);;
+            	break;
+            case 5:
+            	 String Masv; sc.nextLine();
+                 System.out.print("Nhap ma sinh vien can tim: "); Masv = sc.nextLine();
+            	dsSV.TimSvTheoMa(Masv);;
+            	break;
+            case 6:
+            	String hoten; sc.nextLine();
+                System.out.print("Nhap ten sinh vien can tim: "); hoten = sc.nextLine();
+            	dsSV.TimSvTheoTen(hoten);;
+            	break;
+            case 7:
+            	dsSV.SapXepSVTangDan();
+            	 dsSV.in();
+            	break;
+            case 8:
+            	System.out.print("out ");
+            	break;
+            default:
+            	System.out.print("Nhap sai ");
+            	break;
+          
+            }
+        }while (choice!=8);
+    }
+}
